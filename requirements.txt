@@ -1,0 +1,6 @@
+# better to install torch with cuda
+# torch torchvision torchaudio
+pyyaml
+pandas
+tensorboard
+tqdm

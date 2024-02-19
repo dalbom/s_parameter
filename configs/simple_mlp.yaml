@@ -1,0 +1,36 @@
+alias: simple_mlp
+
+backbone:
+  type: models.simple_mlp
+  in_features: 402
+  dims: [512, 512, 256, 128, 64, 7]
+  dropout: 0.2
+  head: softmax # softmax or sigmoid
+
+dataset:
+  type: data.ITO_dataset
+  training:
+    # datapath: data/ITO/splits/training.csv
+    datapath: data/new_ITO/splits/ITO_new_train.csv
+    concat_channels: true
+    use_one_channel: false
+  test:
+    # datapath: data/ITO/splits/validation.csvITO_new_test
+    datapath: ['data/new_ITO/splits/ITO_new_test_1.csv', 'data/new_ITO/splits/ITO_new_test_2.csv', 'data/new_ITO/splits/ITO_new_test_3.csv', 'data/new_ITO/splits/ITO_new_test_4.csv']
+    concat_channels: true
+    use_one_channel: false
+
+trainer:
+  type: trainers.default_trainer
+  batch_size: 128
+  epochs: 1000
+  lr: 2.e-5
+  k: 5 # For k-fold cross validation
+  validate_every: 10
+  early_stop_patience: 10
+  checkpoint: logs\S11-S21\simple_mlp_2023-Apr-29-22-37-44\checkpoints\Fold_0.pt
+
+  # S11 checkpoint: logs\S11\simple_mlp_2023-Apr-29-23-06-14\checkpoints\Fold_0.pt
+  # S21 checkpoint: logs\S21\cnn_2023-Apr-29-22-38-34\checkpoints\Fold_0.pt
+  # S11-S21 checkpoint: logs\S11-S21\simple_mlp_2023-Apr-29-22-37-44\checkpoints\Fold_0.pt
+  

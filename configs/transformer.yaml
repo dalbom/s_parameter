@@ -1,0 +1,32 @@
+alias: transformer
+
+backbone:
+  type: models.transformer
+  d_model: 512
+  nhead: 4
+  dim_feedforward: 1024
+  dropout: 0.2
+  num_layers: 12
+  in_features: 201 #2
+  out_features: 7
+
+dataset:
+  type: data.ITO_dataset
+  training:
+    concat_channels: False
+    use_one_channel: false
+    swap_1st_2nd: True
+    datapath: data/new_ITO/splits/ITO_new_train.csv
+  test:
+    concat_channels: False
+    use_one_channel: false
+    datapath: data/new_ITO/splits/ITO_new_test_4.csv
+
+trainer:
+  type: trainers.default_trainer
+  batch_size: 128
+  epochs: 1000
+  lr: 2.e-5
+  k: 5 # For k-fold cross validation
+  validate_every: 10
+  early_stop_patience: 20

@@ -1,0 +1,30 @@
+alias: cnn
+
+backbone:
+  type: models.efficient_net
+  num_classes: 7
+
+dataset:
+  type: data.ITO_dataset
+  training:
+    concat_channels: False
+    use_one_channel: True
+    datapath: data/new_ITO/splits/ITO_new_train.csv
+  test:
+    concat_channels: False
+    use_one_channel: True
+    datapath: ['data/new_ITO/splits/ITO_new_test_1.csv', 'data/new_ITO/splits/ITO_new_test_2.csv', 'data/new_ITO/splits/ITO_new_test_3.csv', 'data/new_ITO/splits/ITO_new_test_4.csv']
+
+trainer:
+  type: trainers.default_trainer
+  batch_size: 128
+  epochs: 1000
+  lr: 2.e-5
+  k: 5 # For k-fold cross validation
+  validate_every: 10
+  early_stop_patience: 20
+  checkpoint: logs\S21\cnn_2023-Apr-30-00-42-39\checkpoints\Fold_0.pt
+
+  # S11 logs\S11\cnn_2023-Apr-29-23-07-06\checkpoints\Fold_0.pt
+  # S21 logs\S21\cnn_2023-Apr-30-00-42-39\checkpoints\Fold_0.pt
+  # S11-S21 logs\S11-S21\cnn_2023-Apr-29-22-38-34\checkpoints\Fold_0.pt
